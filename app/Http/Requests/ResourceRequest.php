@@ -18,15 +18,15 @@ class ResourceRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:32'],
-            'description' => ['nullable', 'string', 'max:65535'],
+            'description' => ['nullable', 'string', 'max:5000'],
             'preview_url' => [
-                'nullable', 'url', 'max:255', 'regex:/\.(?:jpe?g|png)$/i',
+                'nullable', 'url', 'max:191', 'regex:/\.(?:jpe?g|png)$/i',
             ],
-            'youtube_video_id' => ['nullable', 'string', 'max:255'],
+            'youtube_video_id' => ['nullable', 'string', 'max:191'],
             'engine_release_id' => ['nullable', 'exists:engine_releases,id'],
             'resource_type_id' => ['required', 'exists:resource_types,id'],
             'links.0' => ['required'],
-            'links.*' => ['nullable', 'url', 'distinct:strict', 'max:255'],
+            'links.*' => ['nullable', 'url', 'distinct:strict', 'max:191'],
             'links' => ['required', 'array', 'max:3'],
         ];
     }
