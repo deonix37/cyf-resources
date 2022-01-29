@@ -26,21 +26,16 @@ class ResourceController extends Controller
     {
         return view('resources.index', [
             'resources' => $this->getResources($request),
-            'resourceTypes' => ResourceType::all(),
-            'engines' => Engine::all(),
+            'resourceTypes' => $this->getResourceTypes(),
+            'engines' => $this->getEngines(),
         ]);
     }
 
     public function create()
     {
         return view('resources.create', [
-            'resourceTypes' => ResourceType::all(),
-            'engineReleases' => EngineRelease::join(
-                'engines', 'engine_releases.engine_id', '=', 'engines.id'
-            )->with('engine')
-            ->orderBy('engines.title')
-            ->orderBy('title')
-            ->get(),
+            'resourceTypes' => $this->getResourceTypes(),
+            'engineReleases' => $this->getEngineReleases(),
         ]);
     }
 
@@ -67,8 +62,8 @@ class ResourceController extends Controller
     {
         return view('resources.edit', [
             'resource' => $this->getResource($resource),
-            'resourceTypes' => ResourceType::all(),
-            'engineReleases' => EngineRelease::with('engine')->get(),
+            'resourceTypes' => $this->getResourceTypes(),
+            'engineReleases' => $this->getEngineReleases(),
         ]);
     }
 
@@ -175,6 +170,23 @@ class ResourceController extends Controller
                 'uploader', 'resourceType', 'engineRelease', 'resourceLinks',
                 'upvoters', 'currentUserUpvote',
             ])->paginate(15);
+    }
+
+    protected function getResourceTypes() {
+        return ResourceType::all();
+    }
+
+    protected function getEngines() {
+        return Engine::all();
+    }
+
+    protected function getEngineReleases() {
+        return EngineRelease::join(
+            'engines', 'engine_releases.engine_id', '=', 'engines.id',
+        )->with('engine')
+        ->orderBy('engines.title')
+        ->orderBy('version', 'desc')
+        ->get();
     }
 
     protected function resourceAbilityMap()
