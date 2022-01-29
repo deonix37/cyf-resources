@@ -8,12 +8,14 @@
         <li class="overflow-hidden flex flex-col items-center p-3 border-2 rounded-xl bg-slate-800 shadow"
             data-resource="{{ $resource->slug }}">
           <a class="relative overflow-hidden w-full rounded-lg hover:opacity-80" href="{{ $resourceUrl }}">
-            @if ($resource->youtube_video_id)
-            <img class="max-h-60" alt="{{ __('Preview') }}" width="320" height="180"
-                 src="https://img.youtube.com/vi/{{ $resource->youtube_video_id }}/mqdefault.jpg">
+            @if ($resource->preview_url)
+              <img class="w-full max-h-60 object-cover" alt="{{ __('Preview') }}" src="{{ $resource->preview_url }}">
+            @elseif ($resource->youtube_video_id)
+              <img class="w-full max-h-60 object-cover" alt="{{ __('Preview') }}" width="320" height="180"
+                   src="https://img.youtube.com/vi/{{ $resource->youtube_video_id }}/mqdefault.jpg">
             @else
-            <img class="max-h-60" alt="{{ __('Preview') }}" width="320" height="180"
-                 src="{{ url('images/preview-default.png') }}">
+              <img class="w-full max-h-60 object-cover" alt="{{ __('Preview') }}" width="320" height="180"
+                   src="{{ url('images/preview-default.png') }}">
             @endif
             <div class="absolute bottom-0 flex justify-between items-center w-full px-3 py-1 bg-gradient-to-t
                         from-slate-900 drop-shadow">
@@ -29,12 +31,13 @@
             </div>
           </a>
           <div class="flex flex-col items-center mt-4 w-full">
-            <a class="leading-normal font-bold text-center text-lg text-white hover:underline" href="{{ $resourceUrl }}">
+            <a class="leading-normal font-bold text-center text-lg text-white hover:underline"
+               href="{{ $resourceUrl }}">
               {{ $resource->title }}
             </a>
             @if ($resource->resourceType)
               <div class="mt-2 px-3 py-0.5 max-w-full overflow-hidden bg-{{ $resource->resourceType->color }}-600
-                rounded-xl whitespace-nowrap font-bold text-ellipsis text-sm text-white">
+                          rounded-xl whitespace-nowrap font-bold text-ellipsis text-sm text-white">
                 {{ $resource->resourceType->title }}
               </div>
             @endif

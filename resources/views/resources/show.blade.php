@@ -36,10 +36,17 @@
       @php $upvoted = $resource->upvoters->contains(Auth::id()) @endphp
       @php $uploaderName = $resource->uploader->username ?? __('???') @endphp
       <div class="relative w-full">
-        <img class="w-full object-cover object-top rounded-lg
-                    @if ($resource->youtube_video_id) invisible @endif"
-             src="{{ url('images/preview-default.png') }}"
-             alt="{{ __('Preview') }}" width="320" height="180">
+        @if ($resource->preview_url)
+          <img class="w-full object-cover rounded-lg
+                      @if ($resource->youtube_video_id) invisible @endif"
+               src="{{ $resource->preview_url }}"
+               alt="{{ __('Preview') }}">
+        @else
+          <img class="w-full object-cover rounded-lg
+                      @if ($resource->youtube_video_id) invisible @endif"
+               src="{{ url('images/preview-default.png') }}"
+               alt="{{ __('Preview') }}" width="320" height="180">
+        @endif
         @if ($resource->youtube_video_id)
           <iframe class="absolute top-0 left-0 w-full h-full rounded-lg" title="YouTube video player"
                   src="https://www.youtube.com/embed/{{ $resource->youtube_video_id }}"

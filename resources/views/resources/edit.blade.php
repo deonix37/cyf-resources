@@ -39,10 +39,26 @@
         </div>
         <div class="mt-4">
           <label class="flex flex-col">
+            <span class="text-lg font-medium">{{ __('Preview URL') }}</span>
+            <input class="mt-2 px-3 py-2 border border-gray-300 rounded-md" name="preview_url"
+                   placeholder="https://i.imgur.com/DET98vU.jpg"
+                   value="{{ old('preview_url', $resource->preview_url) }}">
+            <span class="mt-1 text-sm text-gray-500">
+              Allowed formats: jpg, jpeg, png
+            </span>
+          </label>
+          @error('preview_url')
+            <div class="mt-2 text-sm font-bold text-red-600">{{ $message }}</div>
+          @enderror
+        </div>
+        <div class="mt-4">
+          <label class="flex flex-col">
             <span class="text-lg font-medium">{{ __('Youtube video ID') }}</span>
             <input class="mt-2 px-3 py-2 border border-gray-300 rounded-md" name="youtube_video_id"
-                  placeholder="dQw4w9WgXcQ" value="{{ old('youtube_video_id', $resource->youtube_video_id) }}">
-            <span class="mt-1 text-sm text-gray-500">https://youtube.com/watch?v=<span class="font-bold">id</span></span>
+                   placeholder="dQw4w9WgXcQ" value="{{ old('youtube_video_id', $resource->youtube_video_id) }}">
+            <span class="mt-1 text-sm text-gray-500">
+              https://youtube.com/watch?v=<span class="font-bold">ID</span>?t=123
+            </span>
           </label>
           @error('youtube_video_id')
             <div class="mt-2 text-sm font-bold text-red-600">{{ $message }}</div>
@@ -55,7 +71,9 @@
               <option value="">{{ __('Select an engine release') }}</option>
               @foreach ($engineReleases as $engineRelease)
                 <option value="{{ $engineRelease->id }}"
-                        @if ($engineRelease->id == old('engine_release_id', $resource->engine_release_id)) selected @endif>{{ $engineRelease->engine->title }} {{ $engineRelease->version }}</option>
+                        @if ($engineRelease->id == old('engine_release_id', $resource->engine_release_id)) selected @endif>
+                  {{ $engineRelease->engine->title }} {{ $engineRelease->version }}
+                </option>
               @endforeach
             </select>
           </label>
@@ -69,7 +87,8 @@
             @foreach ($resourceTypes as $resourceType)
               <label>
                 <input class="mr-1" type="radio" name="resource_type_id" value="{{ $resourceType->id }}" required
-                      @if ($resourceType->id == old('resource_type_id', $resource->resource_type_id)) checked @endif>{{ $resourceType->title }}
+                       @if ($resourceType->id == old('resource_type_id', $resource->resource_type_id)) checked @endif>
+                {{ $resourceType->title }}
               </label>
             @endforeach
           </div>
@@ -82,8 +101,8 @@
             <span class="text-lg font-medium">{{ __('Download links') }} *</span>
             @foreach (range(0, 2) as $i)
               <input class="mt-2 px-3 py-2 border border-gray-300 rounded-md" name="links[{{ $loop->index }}]"
-                    placeholder="https://example.com/resource"
-                    value="{{ old('links.' . $loop->index, $resource->resourceLinks[$loop->index]->url ?? null) }}">
+                     placeholder="https://example.com/resource"
+                     value="{{ old('links.' . $loop->index, $resource->resourceLinks[$loop->index]->url ?? null) }}">
               @error('links.' . $loop->index)
                 <div class="mt-2 text-sm font-bold text-red-600">{{ $message }}</div>
               @enderror
