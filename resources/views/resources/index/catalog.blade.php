@@ -9,7 +9,8 @@
             data-resource="{{ $resource->slug }}">
           <a class="relative overflow-hidden w-full rounded-lg hover:opacity-80" href="{{ $resourceUrl }}">
             @if ($resource->preview_url)
-              <img class="w-full max-h-60 object-cover" alt="{{ __('Preview') }}" src="{{ $resource->preview_url }}">
+              <img class="w-full max-h-60 object-cover" alt="{{ __('Preview') }}" src="{{ $resource->preview_url }}"
+                   width="320" height="180">
             @elseif ($resource->youtube_video_id)
               <img class="w-full max-h-60 object-cover" alt="{{ __('Preview') }}" width="320" height="180"
                    src="https://img.youtube.com/vi/{{ $resource->youtube_video_id }}/mqdefault.jpg">
