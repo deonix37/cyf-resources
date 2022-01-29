@@ -181,12 +181,14 @@ class ResourceController extends Controller
     }
 
     protected function getEngineReleases() {
-        return EngineRelease::join(
-            'engines', 'engine_releases.engine_id', '=', 'engines.id',
-        )->with('engine')
-        ->orderBy('engines.title')
-        ->orderBy('version', 'desc')
-        ->get();
+        return EngineRelease::select('engine_releases.*')
+            ->with('engine')
+            ->join(
+                'engines', 'engine_releases.engine_id', '=', 'engines.id',
+            )
+            ->orderBy('engines.title')
+            ->orderBy('version', 'desc')
+            ->get();
     }
 
     protected function resourceAbilityMap()
