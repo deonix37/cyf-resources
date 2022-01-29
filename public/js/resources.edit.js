@@ -1,13 +1,1 @@
-(() => {
-    const destroyForm = document.getElementById('destroy-form');
-
-    if (!destroyForm) {
-        return;
-    }
-
-    destroyForm.addEventListener('submit', (evt) => {
-        if (!confirm('Delete the resource?')) {
-            evt.preventDefault();
-        }
-    });
-})();
+(()=>{const e=document.getElementById("destroy-form");e&&e.addEventListener("submit",(e=>{confirm("Delete the resource?")||e.preventDefault()}))})();

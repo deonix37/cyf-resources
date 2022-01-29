@@ -1,13 +1,1 @@
-(() => {
-    const statusForm = document.getElementById('status-form');
-
-    if (!statusForm) {
-        return;
-    }
-
-    statusForm.addEventListener('submit', (evt) => {
-        if (!confirm('Change status?')) {
-            evt.preventDefault();
-        }
-    });
-})();
+(()=>{const t=document.getElementById("status-form");t&&t.addEventListener("submit",(t=>{confirm("Change status?")||t.preventDefault()}))})();
