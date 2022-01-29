@@ -35,7 +35,12 @@ class ResourceController extends Controller
     {
         return view('resources.create', [
             'resourceTypes' => ResourceType::all(),
-            'engineReleases' => EngineRelease::with('engine')->get(),
+            'engineReleases' => EngineRelease::join(
+                'engines', 'engine_releases.engine_id', '=', 'engines.id'
+            )->with('engine')
+            ->orderBy('engines.title')
+            ->orderBy('title')
+            ->get(),
         ]);
     }
 

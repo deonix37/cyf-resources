@@ -48,7 +48,7 @@
             <option value="">{{ __('Select an engine release') }}</option>
             @foreach ($engineReleases as $engineRelease)
               <option value="{{ $engineRelease->id }}"
-                @if ($engineRelease->id == old('engine_release_id')) selected @endif>{{ $engineRelease->engine->title }} {{ $engineRelease->version }}</option>
+                      @if ($engineRelease->id == old('engine_release_id')) selected @endif>{{ $engineRelease->engine->title }} {{ $engineRelease->version }}</option>
             @endforeach
           </select>
         </label>
