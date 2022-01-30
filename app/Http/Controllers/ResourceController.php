@@ -64,13 +64,6 @@ class ResourceController extends GenericResourceController
         );
     }
 
-    public function updateStatus(Request $request, Resource $resource)
-    {
-        return Redirect::route(
-            'resources.show', parent::updateStatus($request, $resource),
-        );
-    }
-
     public function destroy(Resource $resource)
     {
         parent::destroy($resource);

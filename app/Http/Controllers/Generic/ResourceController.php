@@ -25,12 +25,9 @@ class ResourceController extends Controller
 
     public function store(ResourceRequest $request)
     {
-        $resource = Resource::create(
-            Arr::except($request->validated(), 'links'),
-        );
-        $resource->resourceLinks()->createMany(
-            $request->validated()['links'],
-        );
+        $data = $request->validated();
+        $resource = Resource::create(Arr::except($data, 'links'));
+        $resource->resourceLinks()->createMany($data['links']);
 
         return $resource;
     }
@@ -42,23 +39,13 @@ class ResourceController extends Controller
 
     public function update(ResourceRequest $request, Resource $resource)
     {
-        $resource->update(Arr::except(
-            $request->validated(),
-            ['uploader_id', 'slug', 'links'],
-        ));
-        $resource->resourceLinks()->delete();
-        $resource->resourceLinks()->createMany(
-            $request->validated()['links'],
-        );
+        $data = $request->validated();
+        $resource->update(Arr::except($data, 'links'));
 
-        return $resource;
-    }
-
-    public function updateStatus(Request $request, Resource $resource)
-    {
-        $resource->update($request->validate([
-            'is_draft' => ['required', 'boolean'],
-        ]));
+        if (isset($data['links'])) {
+            $resource->resourceLinks()->delete();
+            $resource->resourceLinks()->createMany($data['links']);
+        }
 
         return $resource;
     }
@@ -131,12 +118,5 @@ class ResourceController extends Controller
                     }
                 },
             );
-    }
-
-    protected function resourceAbilityMap()
-    {
-        return parent::resourceAbilityMap() + [
-            'updateStatus' => 'updateStatus',
-        ];
     }
 }

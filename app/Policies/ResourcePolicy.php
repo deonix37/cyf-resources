@@ -27,7 +27,7 @@ class ResourcePolicy
 
     public function update(User $user, Resource $resource)
     {
-        return $resource->uploader()->is($user);
+        return $resource->uploader()->is($user) || $user->is_staff;
     }
 
     public function updateStatus(User $user, Resource $resource)

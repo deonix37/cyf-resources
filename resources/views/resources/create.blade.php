@@ -34,9 +34,9 @@
         <label class="flex flex-col">
           <span class="text-lg font-medium">{{ __('Preview URL') }}</span>
           <input class="mt-2 px-3 py-2 border border-gray-300 rounded-md" name="preview_url"
-                 placeholder="https://i.imgur.com/DET98vU.jpg" value="{{ old('preview_url') }}">
+                 type="url" placeholder="https://i.imgur.com/DET98vU.jpg" value="{{ old('preview_url') }}">
           <span class="mt-1 text-sm text-gray-500">
-            Allowed formats: jpg, jpeg, png
+            {{ __('Allowed formats') }}: jpg, jpeg, png
           </span>
         </label>
         @error('preview_url')
@@ -90,7 +90,8 @@
           <span class="text-lg font-medium">{{ __('Download links') }} *</span>
           @foreach (range(0, 2) as $i)
             <input class="mt-2 px-3 py-2 border border-gray-300 rounded-md" name="links[{{ $loop->index }}]"
-                   placeholder="https://example.com/resource" value="{{ old('links.' . $loop->index) }}">
+                   type="url" placeholder="https://example.com/resource" @if ($loop->first) required @endif
+                   value="{{ old('links.' . $loop->index) }}">
             @error('links.' . $loop->index)
               <div class="mt-2 text-sm font-bold text-red-600">{{ $message }}</div>
             @enderror

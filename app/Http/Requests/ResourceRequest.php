@@ -3,14 +3,28 @@
 namespace App\Http\Requests;
 
 use App\Models\Resource;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ResourceRequest extends FormRequest
 {
+    public function authorize()
+    {
+        if (isset($this->is_draft)) {
+            return $this->user()->can('updateStatus', $this->resource);
+        }
+
+        return true;
+    }
+
     public function rules()
     {
+        if (isset($this->is_draft)) {
+            return [
+                'is_draft' => ['required', 'boolean'],
+            ];
+        }
+
         return [
             'title' => ['required', 'string', 'max:32'],
             'description' => ['nullable', 'string', 'max:5000'],
@@ -28,12 +42,22 @@ class ResourceRequest extends FormRequest
 
     public function validated()
     {
-        return array_merge(parent::validated(), [
-            'uploader_id' => Auth::id(),
-            'slug' => Str::slug($this->title) . '-' . Resource::max('id') + 1,
-            'links' => array_map(function ($link) {
-                return ['url' => $link];
-            }, array_filter($this->links)),
+        $data = parent::validated();
+
+        if (isset($this->is_draft)) {
+            return $data;
+        }
+
+        if ($this->resource) {
+            return array_merge($data, [
+                'links' => $this->getLinks($data),
+            ]);
+        }
+
+        return array_merge($data, [
+            'uploader_id' => $this->user()->id,
+            'slug' => $this->getSlug($data),
+            'links' => $this->getLinks($data),
         ]);
     }
 
@@ -42,5 +66,15 @@ class ResourceRequest extends FormRequest
         return [
             'links.*' => 'link',
         ];
+    }
+
+    protected function getSlug($data) {
+        return Str::slug($data['title']) . '-' . Resource::max('id') + 1;
+    }
+
+    protected function getLinks($data) {
+        return array_map(function ($link) {
+            return ['url' => $link];
+        }, array_filter($data['links']));
     }
 }
