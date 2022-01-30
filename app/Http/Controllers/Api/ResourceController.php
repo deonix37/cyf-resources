@@ -26,7 +26,7 @@ class ResourceController extends GenericResourceController
         $resource = parent::store($request);
 
         return Response::json($resource, 201, [
-            'Location' => route('resources.show', $resource),
+            'Location' => route('api.resources.show', $resource),
         ]);
     }
 

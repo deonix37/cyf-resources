@@ -39,7 +39,7 @@ class ResourceUpvoteController extends Controller
         }
 
         return Response::json($upvote, 201, [
-            'Location' => Route('upvotes.show', $upvote),
+            'Location' => route('api.upvotes.show', $upvote),
         ]);
     }
 
