@@ -4,12 +4,14 @@ use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\ResourceUpvoteController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('verified:sanctum')->group(function () {
-    Route::apiResource(
-        'resources.upvotes',
-        ResourceUpvoteController::class,
-        ['except' => 'update'],
-    )->shallow();
-});
+Route::name('api.')->group(function () {
+    Route::middleware('verified:sanctum')->group(function () {
+        Route::apiResource(
+            'resources.upvotes',
+            ResourceUpvoteController::class,
+            ['except' => 'update'],
+        )->shallow();
+    });
 
-Route::apiResource('resources', ResourceController::class);
+    Route::apiResource('resources', ResourceController::class);
+});
