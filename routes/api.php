@@ -7,5 +7,6 @@ Route::middleware('verified:sanctum')->group(function () {
     Route::apiResource(
         'resources.upvotes',
         ResourceUpvoteController::class,
+        ['except' => 'update'],
     )->shallow();
 });

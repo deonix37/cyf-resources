@@ -34,8 +34,8 @@ class ResourceUpvoteController extends Controller
                 'resource_id' => $resource->id,
                 'upvoter_id' => Auth::id(),
             ]);
-        } catch (QueryException $e) {
-            abort(400, $e->getMessage());
+        } catch (QueryException) {
+            abort(400);
         }
 
         return Response::json($upvote, 201, [
