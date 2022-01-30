@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ResourceRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [
