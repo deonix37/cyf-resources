@@ -68,7 +68,8 @@
           </div>
           <div class="flex justify-center">
             @if (Auth::user()->is_staff ?? false)
-              <form id="status-form" class="ml-2" action="{{ route('resources.update', $resource) }}" method="post">
+              <form id="status-form" class="ml-2" action="{{ route('resources.updateStatus', $resource) }}"
+                    method="post">
                 @csrf
                 @method('PATCH')
                 <input name="is_draft" type="hidden" value="{{ $resource->is_draft ? '0' : '1' }}">

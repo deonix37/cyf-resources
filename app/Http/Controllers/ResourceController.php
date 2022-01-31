@@ -9,6 +9,7 @@ use App\Models\EngineRelease;
 use App\Models\Resource;
 use App\Models\ResourceType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ResourceController extends GenericResourceController
@@ -61,6 +62,13 @@ class ResourceController extends GenericResourceController
     {
         return Redirect::route(
             'resources.show', parent::update($request, $resource),
+        );
+    }
+
+    public function updateStatus(Request $request, Resource $resource)
+    {
+        return Redirect::route(
+            'resources.show', parent::updateStatus($request, $resource),
         );
     }
 

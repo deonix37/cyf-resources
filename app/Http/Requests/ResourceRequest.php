@@ -8,23 +8,8 @@ use Illuminate\Support\Str;
 
 class ResourceRequest extends FormRequest
 {
-    public function authorize()
-    {
-        if (isset($this->is_draft)) {
-            return $this->user()->can('updateStatus', $this->resource);
-        }
-
-        return true;
-    }
-
     public function rules()
     {
-        if (isset($this->is_draft)) {
-            return [
-                'is_draft' => ['required', 'boolean'],
-            ];
-        }
-
         return [
             'title' => ['required', 'string', 'max:32'],
             'description' => ['nullable', 'string', 'max:5000'],
@@ -43,10 +28,6 @@ class ResourceRequest extends FormRequest
     public function validated()
     {
         $data = parent::validated();
-
-        if (isset($this->is_draft)) {
-            return $data;
-        }
 
         if ($this->resource) {
             return array_merge($data, [

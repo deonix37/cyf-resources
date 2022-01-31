@@ -41,11 +41,17 @@ class ResourceController extends Controller
     {
         $data = $request->validated();
         $resource->update(Arr::except($data, 'links'));
+        $resource->resourceLinks()->delete();
+        $resource->resourceLinks()->createMany($data['links']);
 
-        if (isset($data['links'])) {
-            $resource->resourceLinks()->delete();
-            $resource->resourceLinks()->createMany($data['links']);
-        }
+        return $resource;
+    }
+
+    public function updateStatus(Request $request, Resource $resource)
+    {
+        $resource->update($request->validate([
+            'is_draft' => ['required', 'boolean'],
+        ]));
 
         return $resource;
     }
@@ -118,5 +124,12 @@ class ResourceController extends Controller
                     }
                 },
             );
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return parent::resourceAbilityMap() + [
+            'updateStatus' => 'updateStatus',
+        ];
     }
 }
