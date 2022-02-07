@@ -23,7 +23,7 @@ class ResourceUpvoteController extends Controller
         return Response::json($upvotes->get(), 200, [
             'X-Total-Count' => $upvotes->count(),
             'X-User-Upvote-Id' => $upvotes->where('upvoter_id', Auth::id())
-                ->pluck('id')->first(),
+                ->value('id'),
         ]);
     }
 

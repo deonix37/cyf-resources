@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             )
             ->create();
 
-        Resource::all()->each(function ($resource) use ($users) {
+        Resource::each(function ($resource) use ($users) {
             $resource->upvoters()->attach($users->random(rand(0, 10)));
         });
 

@@ -9,7 +9,6 @@ use App\Models\EngineRelease;
 use App\Models\Resource;
 use App\Models\ResourceType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ResourceController extends GenericResourceController
@@ -102,12 +101,10 @@ class ResourceController extends GenericResourceController
     }
 
     protected function getEngineReleases() {
-        return EngineRelease::select('engine_releases.*')
-            ->with('engine')
-            ->join(
-                'engines', 'engine_releases.engine_id', '=', 'engines.id',
-            )
-            ->orderBy('engines.title')
+        return EngineRelease::with('engine')
+            ->orderBy(Engine::select('title')->whereColumn(
+                'id', 'engine_releases.engine_id',
+            ))
             ->orderBy('version', 'desc')
             ->get();
     }
