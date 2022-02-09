@@ -93,11 +93,11 @@ class ResourceController extends GenericResourceController
     }
 
     protected function getResourceTypes() {
-        return ResourceType::all();
+        return ResourceType::orderBy('title')->get();
     }
 
     protected function getEngines() {
-        return Engine::all();
+        return Engine::orderBy('title')->get();
     }
 
     protected function getEngineReleases() {
