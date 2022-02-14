@@ -10,5 +10,5 @@
 9. Run migrations: `./vendor/bin/sail artisan migrate --seed`
     * If you get "Access denied for user 'sail'", run: `./vendor/bin/sail down --rmi all -v` and repeat step 7
 11. Generate app key: `./vendor/bin/sail artisan key:generate`
-12. Run npm scripts: `./vendor/bin/sail npm install & npm run dev`
+12. Run npm scripts: `./vendor/bin/sail npm install && npm run dev`
 13. Start server: `./vendor/bin/sail artisan serve`
