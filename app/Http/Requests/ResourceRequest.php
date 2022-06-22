@@ -16,7 +16,9 @@ class ResourceRequest extends FormRequest
             'preview_url' => [
                 'nullable', 'url', 'max:191', 'regex:/\.(?:jpe?g|png)$/i',
             ],
-            'youtube_video_id' => ['nullable', 'string', 'max:191'],
+            'youtube_video_id' => [
+                'nullable', 'string', 'max:191', 'regex:/^\w+$/',
+            ],
             'engine_release_id' => ['nullable', 'exists:engine_releases,id'],
             'resource_type_id' => ['required', 'exists:resource_types,id'],
             'links.0' => ['required'],

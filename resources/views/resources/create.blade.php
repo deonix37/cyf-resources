@@ -47,7 +47,8 @@
         <label class="flex flex-col">
           <span class="text-lg font-medium">{{ __('Youtube video ID') }}</span>
           <input class="mt-2 px-3 py-2 border border-gray-300 rounded-md" name="youtube_video_id"
-                 placeholder="dQw4w9WgXcQ" value="{{ old('youtube_video_id') }}">
+                 placeholder="dQw4w9WgXcQ" value="{{ old('youtube_video_id') }}"
+                 pattern="\w+" title="The ID goes like this: dQw4w9WgXcQ">
           <span class="mt-1 text-sm text-gray-500">
             https://youtube.com/watch?v=<span class="font-bold">ID</span>?t=123
           </span>
