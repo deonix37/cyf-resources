@@ -88,15 +88,9 @@ class ResourceController extends Controller
                     }
                 }
             )->when(
-                $request->input('engines'),
-                function ($query, $engines) {
-                    if (is_array($engines)) {
-                        $query->whereHas(
-                            'engineRelease.engine',
-                            fn ($subquery) =>
-                                $subquery->whereIn('id', $engines),
-                        );
-                    }
+                $request->input('engine_release'),
+                function ($query, $engineRelease) {
+                    $query->where('engine_release_id', $engineRelease);
                 }
             )->when(
                 $request->boolean('user_published'),

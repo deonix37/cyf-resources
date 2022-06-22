@@ -24,7 +24,7 @@ class ResourceController extends GenericResourceController
         return view('resources.index', [
             'resources' => $this->getResources($request),
             'resourceTypes' => $this->getResourceTypes(),
-            'engines' => $this->getEngines(),
+            'engineReleases' => $this->getEngineReleases(),
         ]);
     }
 
@@ -94,10 +94,6 @@ class ResourceController extends GenericResourceController
 
     protected function getResourceTypes() {
         return ResourceType::orderBy('title')->get();
-    }
-
-    protected function getEngines() {
-        return Engine::orderBy('title')->get();
     }
 
     protected function getEngineReleases() {

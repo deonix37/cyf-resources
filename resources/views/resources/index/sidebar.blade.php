@@ -71,16 +71,13 @@
   </div>
   <div class="pt-4 border-t">
     <div class="text-lg font-medium">{{ __('Engine') }}</div>
-    <div class="flex flex-col mt-2 space-y-2">
-      @foreach ($engines as $engine)
-        <label>
-          <input class="mr-1" type="checkbox" name="engines[]" value="{{ $engine->id }}"
-                 @if (is_array(Request::input('engines'))
-                      && in_array($engine->id, Request::input('engines'))) checked @endif>
-          {{ $engine->title }}
-        </label>
+    <select class="mt-2 p-2 w-full border border-gray-300 rounded-md" name="engine_release">
+      <option value="">{{ __('Engine release') }}</option>
+      @foreach ($engineReleases as $engineRelease)
+        <option value="{{ $engineRelease->id }}"
+                @if ($engineRelease->id == Request::input('engine_release')) selected @endif>{{ $engineRelease->engine->title }} {{ $engineRelease->version }}</option>
       @endforeach
-    </div>
+    </select>
   </div>
   <div class="pt-4 border-t">
     <button class="p-3 w-full rounded-2xl bg-gray-700 font-bold text-white hover:opacity-90 active:scale-95">
