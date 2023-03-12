@@ -6,9 +6,7 @@
 5. Copy .env.example and rename to .env: `cp .env.example .env`
 6. Initialize Laravel Sail: https://laravel.com/docs/8.x/sail#installing-composer-dependencies-for-existing-projects
 7. Start Sail: `./vendor/bin/sail up -d`
-8. Run install: `./vendor/bin/sail artisan sail:install`
+8. Generate app key: `./vendor/bin/sail artisan key:generate`
 9. Run migrations: `./vendor/bin/sail artisan migrate --seed`
-    * If you get "Access denied for user 'sail'", run: `./vendor/bin/sail down --rmi all -v` and repeat step 7
-11. Generate app key: `./vendor/bin/sail artisan key:generate`
-12. Run npm scripts: `./vendor/bin/sail npm install && npm run dev`
-13. Start server: `./vendor/bin/sail artisan serve`
+10. Run npm scripts: `./vendor/bin/sail npm install && ./vendor/bin/sail npm run dev`
+11. You can visit http://localhost/
